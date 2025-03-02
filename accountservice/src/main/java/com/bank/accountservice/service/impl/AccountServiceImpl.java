@@ -53,4 +53,13 @@ public class AccountServiceImpl implements AccountService {
                 .map(mapper::toDTO)
                 .toList();
     }
+
+    @Override
+    public List<AccountDTO> getAllAccount() {
+        return repository.findAll()
+        .stream()
+        .map(mapper::toDTO)
+        .toList();
+    
+    }
 }

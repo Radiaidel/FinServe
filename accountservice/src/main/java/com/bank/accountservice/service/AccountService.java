@@ -12,4 +12,6 @@ public interface AccountService {
     AccountDTO getAccountById(Long id);
 
     List<AccountDTO> getAccountsByCustomerId(Long customerId);
+
+    List<AccountDTO> getAllAccount();
 }

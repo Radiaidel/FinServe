@@ -30,6 +30,11 @@ public class AccountController {
         return ResponseEntity.ok(service.getAccountById(id));
     }
 
+    @GetMapping
+    public ResponseEntity<List<AccountDTO>> getAllAccount() {
+        return ResponseEntity.ok(service.getAllAccount());
+    }
+
     @GetMapping("/customer/{customerId}")
     public ResponseEntity<List<AccountDTO>> getAccountsByCustomer(@PathVariable Long customerId) {
         return ResponseEntity.ok(service.getAccountsByCustomerId(customerId));
