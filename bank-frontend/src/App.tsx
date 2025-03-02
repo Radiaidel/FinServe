@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
-import { ThemeProvider, createTheme } from "@mui/material/styles"
+import { ThemeProvider } from "@mui/material/styles"
 import CssBaseline from "@mui/material/CssBaseline"
 import Layout from "./components/Layout"
 import Dashboard from "./pages/Dashboard"
@@ -10,17 +10,7 @@ import AccountList from "./pages/accounts/AccountList"
 import AccountDetails from "./pages/accounts/AccountDetails"
 import CreateAccount from "./pages/accounts/CreateAccount"
 import { SnackbarProvider } from "./context/SnackbarContext"
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: "#1976d2",
-    },
-    secondary: {
-      main: "#dc004e",
-    },
-  },
-})
+import theme from "./theme"
 
 function App() {
   return (

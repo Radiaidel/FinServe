@@ -16,12 +16,14 @@ import {
   ListItemText,
   Divider,
   IconButton,
+  useTheme,
 } from "@mui/material"
 import {
   Menu as MenuIcon,
   Dashboard as DashboardIcon,
   People as PeopleIcon,
   AccountBalance as AccountBalanceIcon,
+  ChevronLeft as ChevronLeftIcon,
 } from "@mui/icons-material"
 import GlobalSnackbar from "./GlobalSnackbar"
 
@@ -46,6 +48,14 @@ const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{
   }),
 }))
 
+const DrawerHeader = styled("div")(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  padding: theme.spacing(0, 1),
+  ...theme.mixins.toolbar,
+  justifyContent: "flex-end",
+}))
+
 interface LayoutProps {
   children: ReactNode
 }
@@ -53,6 +63,7 @@ interface LayoutProps {
 export default function Layout({ children }: LayoutProps) {
   const [open, setOpen] = useState(true)
   const navigate = useNavigate()
+  const theme = useTheme()
 
   const handleDrawerToggle = () => {
     setOpen(!open)
@@ -72,7 +83,7 @@ export default function Layout({ children }: LayoutProps) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Banking Application
+            FinServe Banking
           </Typography>
         </Toolbar>
       </AppBar>
@@ -85,26 +96,37 @@ export default function Layout({ children }: LayoutProps) {
           "& .MuiDrawer-paper": {
             width: drawerWidth,
             boxSizing: "border-box",
+            backgroundColor: theme.palette.primary.main,
+            color: theme.palette.primary.contrastText,
           },
         }}
       >
-        <Toolbar />
-        <Box sx={{ overflow: "auto" }}>
-          <List>
-            {menuItems.map((item) => (
-              <ListItem key={item.text} disablePadding>
-                <ListItemButton onClick={() => navigate(item.path)}>
-                  <ListItemIcon>{item.icon}</ListItemIcon>
-                  <ListItemText primary={item.text} />
-                </ListItemButton>
-              </ListItem>
-            ))}
-          </List>
-          <Divider />
-        </Box>
+        <DrawerHeader>
+          <IconButton onClick={handleDrawerToggle} sx={{ color: theme.palette.primary.contrastText }}>
+            <ChevronLeftIcon />
+          </IconButton>
+        </DrawerHeader>
+        <Divider sx={{ backgroundColor: theme.palette.primary.light }} />
+        <List>
+          {menuItems.map((item) => (
+            <ListItem key={item.text} disablePadding>
+              <ListItemButton
+                onClick={() => navigate(item.path)}
+                sx={{
+                  "&:hover": {
+                    backgroundColor: theme.palette.primary.light,
+                  },
+                }}
+              >
+                <ListItemIcon sx={{ color: theme.palette.primary.contrastText }}>{item.icon}</ListItemIcon>
+                <ListItemText primary={item.text} />
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
       </Drawer>
       <Main open={open}>
-        <Toolbar />
+        <DrawerHeader />
         {children}
         <GlobalSnackbar />
       </Main>
